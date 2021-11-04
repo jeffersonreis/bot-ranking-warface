@@ -22,7 +22,7 @@ async function firstQuery(){
 
   listAll.map((play, index) => (
     Player.create({nickname: play.nickname, earned_pc: 0, old_pc: play.clan_points, new_pc: play.clan_points}),
-    index < 10? first += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.clan_points} Pontos PC` : ''
+    index < 20? first += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.clan_points} Pontos PC` : ''
   ))
 
   return first
@@ -47,7 +47,7 @@ function comparer(a, b) {
 function createMessage(listPlay){
   let msg = 'Campeonato da Kings Of Zuera!\n'
   listPlay.map((play, index) => 
-    index < 10? msg += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.earned_pc} Pontos Ganhos` : ''
+    index < 20? msg += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.earned_pc} Pontos Ganhos` : ''
   )
 
   return msg
@@ -76,12 +76,12 @@ async function sendMsgBotTemp(client, msg){
   if (lastMessage != null){
     await lastMessage.delete()
   }
-  lastMessage = await client.channels.cache.get(`905655056160948244`).send(msg)
+  lastMessage = await client.channels.cache.get(`905284439595184138`).send(msg)
 }
 
 // mensagem que nao Apaga
 async function sendMsgBot(client, msg){
-  client.channels.cache.get(`905655056160948244`).send(msg)
+  client.channels.cache.get(`905284439595184138`).send(msg)
 }
 
 // async function stopJobs(jobUpdate, jobStop, client){
@@ -106,6 +106,9 @@ async function acabar(client){
 }
 
 async function iniciar(client){
+  JobActual = null
+  lastMessage = null
+
   console.log("Entrei")
   await destroyAllDates();
   console.log("Limpei os dados")
@@ -113,7 +116,7 @@ async function iniciar(client){
   sendMsgBot(client, first)
   console.log("Criei os novos")
   
-  const jobUpdate = new Job('*/5 * * * *', () =>{
+  const jobUpdate = new Job('*/1 * * * *', () =>{
     updatePoints(client)
   }, null, true, 'America/Sao_Paulo')
   
@@ -128,7 +131,7 @@ async function iniciar(client){
 async function continuar(client){
   lastMessage = null
   sendMsgBot(client, "Continuando campeonato!")
-  const jobUpdate = new Job('*/5 * * * *', () =>{
+  const jobUpdate = new Job('*/1 * * * *', () =>{
     updatePoints(client)
   }, null, true, 'America/Sao_Paulo')
   
