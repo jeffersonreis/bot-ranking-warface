@@ -26,10 +26,10 @@ async function firstQuery(){
 
   listAll.map((play, index) => (
     Player.create({nickname: play.nickname, earned_pc: 0, old_pc: play.clan_points, new_pc: play.clan_points}),
-    index < 30? first += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.clan_points} Pontos PC` : ''
+    index < 40? first += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.clan_points} Pontos PC` : ''
   ))
 
-  first += '\n\n#######################################\nBoa Sorte a Todos...\n'
+  // first += '\n\n#######################################\nBoa Sorte a Todos...\n'
 
   return first
 }
@@ -53,7 +53,7 @@ function comparer(a, b) {
 function createMessage(listPlay){
   let msg = 'Campeonato da Kings Of Zuera!\n'
   listPlay.map((play, index) => 
-    index < 20? msg += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.earned_pc} Pontos Ganhos` : ''
+    index < 40? msg += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.earned_pc} Pontos Ganhos` : ''
   )
 
   return msg
