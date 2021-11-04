@@ -4,7 +4,7 @@
   "description": "Projeto de um Bot do discord com consulta em Web Scraping feito no Puppeteer e Banco de Dados PostgreSQL.",
   "main": "index.js",
   "scripts": {
-    "start":"node .",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/jeffersonreis/discordScraping#readme",
   "dependencies": {
-    "cron": "^1.8.2",
+    "discord-fetch-all": "^3.0.2",
     "discord.js": "^13.3.1",
     "pg": "^8.7.1",
     "sequelize": "^6.9.0"
@@ -27,5 +27,5 @@
   "engines": {
     "node": "^16.x",
     "npm": "^7.x"
- }
+  }
 }

@@ -1,9 +1,13 @@
 const fetch = require('node-fetch');
-const Job = require('cron').CronJob
+// const Job = require('cron').CronJob
 const Player = require("./player")
 
-let JobActual = null
+let workAtual = false
 let lastMessage = null
+
+let timeSleep = 300000 
+// seconds
+
 
 async function listAllPlayers(){
   const url = 'https://api.wfstats.cf/clan/members?name=KingsOfZuera&server=eu';
@@ -17,13 +21,15 @@ async function destroyAllDates(){
 }
 
 async function firstQuery(){
-  let first = '\nCampeonato da Kings Of Zuera!\n\nBoa sorte a todos....\n'
+  let first = '\n[TESTE] Campeonato da Kings Of Zuera!\n\nPontos atuais\n'
   let listAll = await listAllPlayers()
 
   listAll.map((play, index) => (
     Player.create({nickname: play.nickname, earned_pc: 0, old_pc: play.clan_points, new_pc: play.clan_points}),
-    index < 20? first += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.clan_points} Pontos PC` : ''
+    index < 30? first += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.clan_points} Pontos PC` : ''
   ))
+
+  first += '\n\n#######################################\nBoa Sorte a Todos...\n'
 
   return first
 }
@@ -76,12 +82,12 @@ async function sendMsgBotTemp(client, msg){
   if (lastMessage != null){
     await lastMessage.delete()
   }
-  lastMessage = await client.channels.cache.get(`905284439595184138`).send(msg)
+  lastMessage = await client.channels.cache.get(`905655056160948244`).send(msg)
 }
 
 // mensagem que nao Apaga
 async function sendMsgBot(client, msg){
-  client.channels.cache.get(`905284439595184138`).send(msg)
+  client.channels.cache.get(`905655056160948244`).send(msg)
 }
 
 // async function stopJobs(jobUpdate, jobStop, client){
@@ -99,14 +105,11 @@ async function sendMsgBot(client, msg){
 async function acabar(client){
   sendMsgBot(client, '\n##### Campeonato Terminado!! ##### \n')
   await updatePoints(client)
-  if (JobActual != null){ 
-    JobActual.stop()
-    lastMessage = null
-  }
+  workAtual = false
 }
 
 async function iniciar(client){
-  JobActual = null
+  workAtual = true
   lastMessage = null
 
   console.log("Entrei")
@@ -115,33 +118,24 @@ async function iniciar(client){
   let first = await firstQuery()
   sendMsgBot(client, first)
   console.log("Criei os novos")
-  
-  const jobUpdate = new Job('*/1 * * * *', () =>{
-    console.log('Atualizando')
-    updatePoints(client)
-  }, null, true, 'America/Sao_Paulo')
-  
-  // const jobStop = new Job('* */2 * * *',  () =>{
-  //   stopJobs(jobUpdate, jobStop, client)
-  // }, null, true, 'America/Sao_Paulo')
 
-  JobActual = jobUpdate
+  while (workAtual) {
+    console.log('Atualizando')
+    await updatePoints(client)
+    await new Promise(r => setTimeout(r, timeSleep));
+  }
 }
 
-
 async function continuar(client){
+  workAtual = true
   lastMessage = null
   sendMsgBot(client, "Continuando campeonato!")
-  const jobUpdate = new Job('*/1 * * * *', () =>{
-    console.log('Atualizando')
-    updatePoints(client)
-  }, null, true, 'America/Sao_Paulo')
   
-  // const jobStop = new Job('* */2 * * *',  () =>{
-  //   stopJobs(jobUpdate, jobStop, client)
-  // }, null, true, 'America/Sao_Paulo')
-
-  JobActual = jobUpdate
+  while (workAtual) {
+    console.log('Atualizando')
+    await updatePoints(client)
+    await new Promise(r => setTimeout(r, timeSleep));
+  }
 }
 
 module.exports = { iniciar, acabar, continuar };
