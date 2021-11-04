@@ -4,6 +4,7 @@ const Player = require("./player")
 
 let workAtual = true
 let lastMessage = null
+let haveUpdate = true
 
 let timeSleep = 60000 
 // seconds
@@ -35,9 +36,12 @@ async function firstQuery(){
 }
 
 async function updatePlayer(player, newPc){
-  player.new_pc = newPc;
-  player.earned_pc = player.new_pc - player.old_pc;
-  player.save();
+  if (newPc - player.old_pc != 0){
+    player.new_pc = newPc;
+    player.earned_pc = player.new_pc - player.old_pc;
+    player.save();
+    haveUpdate = true
+  }
 }
 
 function comparer(a, b) {
@@ -60,10 +64,12 @@ function createMessage(listPlay){
 }
 
 async function updateTable(client){
-  const players = await Player.findAll();
-  players.sort(comparer);
-  let msg = createMessage(players)
-  sendMsgBotTemp(client, msg)
+  if (haveUpdate){
+    const players = await Player.findAll();
+    players.sort(comparer);
+    let msg = createMessage(players)
+    sendMsgBotTemp(client, msg)
+  }
 }
 
 async function updatePoints(client){
@@ -104,6 +110,7 @@ async function sendMsgBot(client, msg){
 
 async function acabar(client){
   sendMsgBot(client, '\n##### Campeonato Terminado!! ##### \n')
+  haveUpdate = true
   await updatePoints(client)
   workAtual = false
 }
@@ -111,6 +118,7 @@ async function acabar(client){
 async function iniciar(client){
   workAtual = true
   lastMessage = null
+  haveUpdate = true
 
   console.log("Entrei")
   await destroyAllDates();
@@ -122,18 +130,21 @@ async function iniciar(client){
   while (workAtual) {
     console.log('Atualizando')
     await updatePoints(client)
+    haveUpdate = false
     await new Promise(r => setTimeout(r, timeSleep));
   }
 }
 
 async function continuar(client){
   workAtual = true
+  haveUpdate = true
   lastMessage = null
   sendMsgBot(client, "Continuando campeonato!")
   
   while (workAtual) {
     console.log('Atualizando')
     await updatePoints(client)
+    haveUpdate = false
     await new Promise(r => setTimeout(r, timeSleep));
   }
 }
