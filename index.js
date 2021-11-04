@@ -1,3 +1,5 @@
+console.log('Iniciando o bot')
+
 const { Client, Intents } = require('discord.js');
 const config = require("./config.json");
 const robo = require("./robo.js");
