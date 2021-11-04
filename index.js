@@ -9,14 +9,6 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 client.login("OTA1MjgyNzM5NDY3NTg3NjI2.YYH0QA.3adDsZzBIVKVZoV1uyFzvpeHVGg");
 const prefix = "!";
 
-function lancaBrabra(){
-  client.on("ready", function() {
-    client.channels.cache.get(`905284439595184138`).send(`Text`)
-  });
-}
-
-lancaBrabra()
-
 client.on("messageCreate", function(message) {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;

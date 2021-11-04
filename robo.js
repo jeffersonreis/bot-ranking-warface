@@ -76,12 +76,12 @@ async function sendMsgBotTemp(client, msg){
   if (lastMessage != null){
     await lastMessage.delete()
   }
-  lastMessage = await client.channels.cache.get(`905284439595184138`).send(msg)
+  lastMessage = await client.channels.cache.get(`905655056160948244`).send(msg)
 }
 
 // mensagem que nao Apaga
 async function sendMsgBot(client, msg){
-  client.channels.cache.get(`905284439595184138`).send(msg)
+  client.channels.cache.get(`905655056160948244`).send(msg)
 }
 
 // async function stopJobs(jobUpdate, jobStop, client){
