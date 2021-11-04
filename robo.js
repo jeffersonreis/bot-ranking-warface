@@ -77,7 +77,9 @@ async function updatePoints(client){
   
   for (let play of newListAll){
     let player = await Player.findByPk(play.nickname)
-    await updatePlayer(player, play.clan_points)
+    if (player != undefined && player != null){
+      await updatePlayer(player, play.clan_points)
+    }
   }
   console.log('atualizei')
   updateTable(client)
@@ -86,7 +88,12 @@ async function updatePoints(client){
 // mensagem que apaga
 async function sendMsgBotTemp(client, msg){
   if (lastMessage != null){
-    await lastMessage.delete()
+    try{
+      await lastMessage.delete()
+    }
+    catch{
+      console.log('N consegui apagar, mas td bem.')
+    }
   }
   lastMessage = await client.channels.cache.get(`905655056160948244`).send(msg)
 }
