@@ -36,7 +36,7 @@ async function firstQuery(){
 }
 
 async function updatePlayer(player, newPc){
-  if (newPc - player.old_pc != 0){
+  if (newPc - player.new_pc != 0){
     player.new_pc = newPc;
     player.earned_pc = player.new_pc - player.old_pc;
     player.save();
