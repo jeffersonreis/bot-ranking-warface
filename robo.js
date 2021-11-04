@@ -2,10 +2,10 @@ const fetch = require('node-fetch');
 // const Job = require('cron').CronJob
 const Player = require("./player")
 
-let workAtual = false
+let workAtual = true
 let lastMessage = null
 
-let timeSleep = 300000 
+let timeSleep = 60000 
 // seconds
 
 
