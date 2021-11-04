@@ -123,6 +123,10 @@ async function iniciar(client){
     console.log('Atualizando')
     await updatePoints(client)
     await new Promise(r => setTimeout(r, timeSleep));
+    await new Promise(r => setTimeout(r, timeSleep));
+    await new Promise(r => setTimeout(r, timeSleep));
+    await new Promise(r => setTimeout(r, timeSleep));
+    await new Promise(r => setTimeout(r, timeSleep));
   }
 }
 
@@ -134,6 +138,10 @@ async function continuar(client){
   while (workAtual) {
     console.log('Atualizando')
     await updatePoints(client)
+    await new Promise(r => setTimeout(r, timeSleep));
+    await new Promise(r => setTimeout(r, timeSleep));
+    await new Promise(r => setTimeout(r, timeSleep));
+    await new Promise(r => setTimeout(r, timeSleep));
     await new Promise(r => setTimeout(r, timeSleep));
   }
 }

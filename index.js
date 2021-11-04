@@ -23,17 +23,12 @@ client.on("messageCreate", async function(message) {
     // apenas esses IDs podem chamar o bot 
 
     if (command === "limpartudo") {    
-      console.log('Ei')                  
-      
       const allMessages = await fetchAll.messages(message.channel, {
         reverseArray: true, // Reverse the returned array
         // userOnly: true, // Only return messages by users
         // botOnly: false, // Only return messages by bots
         // pinnedOnly: false, // Only returned pinned messages
       });
-
-      console.log('TAMANHO', allMessages.length)
-      console.log('ID', allMessages[2].author.id)
 
       for (var i = 0; i < allMessages.length; i++){
         if (allMessages[i].author.id === "905282739467587626"){
