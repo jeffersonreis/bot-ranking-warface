@@ -17,7 +17,7 @@ async function destroyAllDates(){
 }
 
 async function firstQuery(){
-  let first = '\nCampeonato da Kings Of Zuera!\n\nBoa sorte a todos\n'
+  let first = '\nCampeonato da Kings Of Zuera!\n\nBoa sorte a todos....\n'
   let listAll = await listAllPlayers()
 
   listAll.map((play, index) => (
@@ -117,6 +117,7 @@ async function iniciar(client){
   console.log("Criei os novos")
   
   const jobUpdate = new Job('*/1 * * * *', () =>{
+    console.log('Atualizando')
     updatePoints(client)
   }, null, true, 'America/Sao_Paulo')
   
@@ -132,6 +133,7 @@ async function continuar(client){
   lastMessage = null
   sendMsgBot(client, "Continuando campeonato!")
   const jobUpdate = new Job('*/1 * * * *', () =>{
+    console.log('Atualizando')
     updatePoints(client)
   }, null, true, 'America/Sao_Paulo')
   
