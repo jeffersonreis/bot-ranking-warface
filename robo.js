@@ -5,8 +5,8 @@ let workAtual = true
 let lastMessage = null
 let listAllPlayers = []
 
-let channel = "905284439595184138" // meu
-//let channel = "905655056160948244" // koz
+// let channel = "905284439595184138" // meu
+let channel = "905655056160948244" // koz
 
 
 let timeSleep = 60000 
