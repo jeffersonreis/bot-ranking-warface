@@ -25,9 +25,6 @@ client.on("messageCreate", async function(message) {
     if (command === "limpartudo") {    
       const allMessages = await fetchAll.messages(message.channel, {
         reverseArray: true, // Reverse the returned array
-        // userOnly: true, // Only return messages by users
-        // botOnly: false, // Only return messages by bots
-        // pinnedOnly: false, // Only returned pinned messages
       });
 
       for (var i = 0; i < allMessages.length; i++){
