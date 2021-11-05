@@ -4,7 +4,6 @@ const { Client, Intents } = require('discord.js');
 // const config = require("./config.json");
 const fetchAll = require('discord-fetch-all');
 const robo = require("./robo.js");
-
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 client.login("OTA1MjgyNzM5NDY3NTg3NjI2.YYH0QA.3adDsZzBIVKVZoV1uyFzvpeHVGg");

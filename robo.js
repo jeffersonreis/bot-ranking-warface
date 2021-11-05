@@ -5,6 +5,10 @@ let workAtual = true
 let lastMessage = null
 let listAllPlayers = []
 
+let channel = "905284439595184138" // meu
+//let channel = "905655056160948244" // koz
+
+
 let timeSleep = 60000 
 // seconds
 
@@ -131,12 +135,12 @@ async function sendMsgBotTemp(client, msg){
       console.log('N consegui apagar, mas td bem.')
     }
   }
-  lastMessage = await client.channels.cache.get(`905655056160948244`).send(msg)
+  lastMessage = await client.channels.cache.get(channel).send(msg)
 }
 
 // mensagem que nao Apaga
 async function sendMsgBot(client, msg){
-  client.channels.cache.get(`905655056160948244`).send(msg)
+  client.channels.cache.get(channel).send(msg)
 }
 
 async function acabar(client){
