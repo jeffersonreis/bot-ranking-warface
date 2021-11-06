@@ -67,7 +67,7 @@ async function firstQuery(client){
 
   listAllPlayers.map((play, index) => (
     Player.create({nickname: play.nickname, earned_pc: 0, old_pc: play.clan_points, new_pc: play.clan_points}),
-    index < 40? first += `\n ${index+1}º Lugar: ${play.nickname}, com ${play.clan_points} Pontos PC` : ''
+      first += `\n ${index+1}º: ${play.nickname}, com ${play.clan_points} PC`
   ))
 
   await sendMsgBot(client, first)

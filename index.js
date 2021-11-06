@@ -1,5 +1,8 @@
 console.log('Iniciando o bot')
 
+// let channel = "905284439595184138" // meu
+let channel = "905655056160948244" // koz
+
 const { Client, Intents } = require('discord.js');
 // const config = require("./config.json");
 const fetchAll = require('discord-fetch-all');
@@ -9,8 +12,34 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 client.login("OTA1MjgyNzM5NDY3NTg3NjI2.YYH0QA.3adDsZzBIVKVZoV1uyFzvpeHVGg");
 const prefix = "!";
 
+async function apagar(message, all){
+  const allMessages = await fetchAll.messages(message.channel, {
+    reverseArray: true, // Reverse the returned array
+  });
+
+  for (var i = 0; i < allMessages.length; i++){
+    if (allMessages[i].author.id === "905282739467587626"){
+
+      // apaga tudo menos o First
+      if(!all){
+        if (!allMessages[i].content.includes('atuais')){
+          await allMessages[i].delete();
+        }
+      }
+
+      // apagar tudo mesmo
+      else{
+        await allMessages[i].delete();
+      }
+    }
+  }
+}
+
+client.on("ready", async function(){
+  client.channels.cache.get(channel).send("!continuarpontos")
+})
+
 client.on("messageCreate", async function(message) {
-  if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
   
   const commandBody = message.content.slice(prefix.length);
@@ -18,36 +47,31 @@ client.on("messageCreate", async function(message) {
   const command = args.shift().toLowerCase();
 
   // console.log(message)
-  if (message.author.id === '322815670981099542' || message.author.id === '294953779126861824'){
+  if (message.author.id === '322815670981099542' || message.author.id === '294953779126861824' || message.author.id === "905282739467587626"){
     // apenas esses IDs podem chamar o bot 
 
-    if (command === "limpartudo") {    
-      const allMessages = await fetchAll.messages(message.channel, {
-        reverseArray: true, // Reverse the returned array
-      });
-
-      for (var i = 0; i < allMessages.length; i++){
-        if (allMessages[i].author.id === "905282739467587626"){
-          await allMessages[i].delete();
-        }
-      }
+    if (command === "limpar") {    
+      apagar(message, false)
     }
 
-    if (command === "iniciarcampeonato") {                      
+    if (command === "limpartudo") {    
+      apagar(message, true)
+    }
+
+    if (command === "iniciarpontos") {                      
       message.reply("Iniciando!");
       robo.iniciar(client)
       }
     
-    if (command === "finalizarcampeonato") {
+    if (command === "finalizarpontos") {
       console.log('Vamos parando!!!')
       robo.acabar(client)
     }
 
-    if (command === "continuarcampeonato") {
+    if (command === "continuarpontos") {
+      await apagar(message, false)
       console.log('Continuando!!!')
       robo.continuar(client)
     }
   }
 });
-
-// client.channels.cache.get(`905284439595184138`).send(`Text`)
