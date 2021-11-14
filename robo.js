@@ -38,7 +38,9 @@ async function updateListAllPlayers(){
   const url = 'https://api.wfstats.cf/clan/members?name=KingsOfZuera&server=eu';
   let result = await fetch(url)
   result = await result.json()
-  if(!result?.status === 'error'){
+  
+  // verificar erro da API do warface
+  if(result?.status === undefined){
     listAllPlayers = await result.members
 
     let state = false
@@ -55,7 +57,9 @@ async function updateListAllPlayers(){
     return state  
   }
 
-  return 'error'
+  else{
+    return 'error'
+  }
 }
 
 

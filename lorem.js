@@ -5,7 +5,8 @@ async function updateListAllPlayers(){
   const url = 'https://api.wfstats.cf/clan/members?name=KingsOfZuera&server=eu';
   let result = await fetch(url)
   result = await result.json()
-  if(!result?.status === error){
+  console.log(result?.status === undefined)
+  if(result?.status === "error"){
     listAllPlayers = await result.members
 
     let state = false
@@ -20,6 +21,9 @@ async function updateListAllPlayers(){
       state = await comparererPointsUpdate(oldListAllPlayers, listAllPlayers)
     }
     return state  
+  }
+  else{
+    console.log('ERRRROOORR')
   }
 }
 
