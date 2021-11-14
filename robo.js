@@ -38,21 +38,24 @@ async function updateListAllPlayers(){
   const url = 'https://api.wfstats.cf/clan/members?name=KingsOfZuera&server=eu';
   let result = await fetch(url)
   result = await result.json()
-  listAllPlayers = await result.members
+  if(!result?.status === error){
+    listAllPlayers = await result.members
 
-  let state = false
-
-  // em caso da lista anterior ser vazia
-  if (oldListAllPlayers.length === 0){
-    state = true
+    let state = false
+  
+    // em caso da lista anterior ser vazia
+    if (oldListAllPlayers.length === 0){
+      state = true
+    }
+  
+    // se n for vazia, comparar as duas listas para ver se tem atualizacao
+    else{
+      state = await comparererPointsUpdate(oldListAllPlayers, listAllPlayers)
+    }
+    return state  
   }
 
-  // se n for vazia, comparar as duas listas para ver se tem atualizacao
-  else{
-    state = await comparererPointsUpdate(oldListAllPlayers, listAllPlayers)
-  }
-
-  return state
+  return 'error'
 }
 
 
@@ -111,7 +114,7 @@ async function updatePoints(client){
   console.log('Estou Vivo!')
   let haveUpdate = await updateListAllPlayers()
 
-  if (haveUpdate){
+  if (haveUpdate === true){
     // atualiza no Banco de Dados
     for (let newPlay of listAllPlayers){
       let bdPlayer = await Player.findByPk(newPlay.nickname)
@@ -122,6 +125,10 @@ async function updatePoints(client){
 
     // Atualiza no Discord
     updateTable(client)
+  }
+
+  if (haveUpdate === "error"){
+    sendMsgBotTemp(client, "API Warface Fora do Ar")
   }
 }
 
