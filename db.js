@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-require("dotenv").config()
-const sequelize = new Sequelize(process.env.BD_URL, {dialect: 'postgres'});
+let config = require("config.json") 
+// require("dotenv").config()
+const sequelize = new Sequelize(config.BD_URL, {dialect: 'postgres'});
 
 module.exports = sequelize;

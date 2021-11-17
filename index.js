@@ -1,5 +1,6 @@
 console.log('Iniciando o bot')
-require("dotenv").config()
+// require("dotenv").config()
+let config = require("config.json") 
 
 // let channel = "905284439595184138" // meu
 let channel = "905655056160948244" // koz
@@ -11,7 +12,7 @@ const fetchAll = require('discord-fetch-all');
 const robo = require("./robo.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-client.login(process.env.BOT_TOKEN);
+client.login(config.BOT_TOKEN);
 const prefix = "!";
 
 async function apagar(message, all){
