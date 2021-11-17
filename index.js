@@ -1,6 +1,6 @@
 console.log('Iniciando o bot')
 // require("dotenv").config()
-let config = require("config.json") 
+let config = require("./config.json") 
 
 // let channel = "905284439595184138" // meu
 let channel = "905655056160948244" // koz
