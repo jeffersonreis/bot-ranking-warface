@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-// const config = require("./config.json");
-const sequelize = new Sequelize("postgres://bhvkswaz:hUW_w78z-HuJ3IYkLxnyA98AVOGxSBIj@motty.db.elephantsql.com/bhvkswaz", {dialect: 'postgres'});
+require("dotenv").config()
+const sequelize = new Sequelize(process.env.BD_URL, {dialect: 'postgres'});
 
 module.exports = sequelize;
