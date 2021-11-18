@@ -175,8 +175,13 @@ async function iniciar(client){
 
   // while indeterminado
   while (workAtual) {
-    await updatePoints(client)
-    await new Promise(r => setTimeout(r, timeSleep));
+    try{
+      await updatePoints(client)
+      await new Promise(r => setTimeout(r, timeSleep));
+    }
+    catch{
+      console.log('Ocorreu algum erro...')
+    }
   }
 }
 
@@ -186,8 +191,13 @@ async function continuar(client){
   sendMsgBot(client, "Continuando Ranking!")
   
   while (workAtual) {
-    await updatePoints(client)
-    await new Promise(r => setTimeout(r, timeSleep));
+    try{
+      await updatePoints(client)
+      await new Promise(r => setTimeout(r, timeSleep));
+    }
+    catch{
+      console.log('Ocorreu algum erro...')
+    }
   }
 }
 
