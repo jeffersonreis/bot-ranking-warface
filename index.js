@@ -35,9 +35,9 @@ async function apagar(message, all){
   }
 }
 
-// client.on("ready", async function(){
-//   client.channels.cache.get(channel).send("!continuarpontos")
-// })
+client.on("ready", async function(){
+  client.channels.cache.get(channel).send("!continuarpontos")
+})
 
 client.on("messageCreate", async function(message) {
   
