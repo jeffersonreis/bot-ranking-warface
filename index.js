@@ -21,60 +21,70 @@ async function apagar(message, all){
   });
 
   for (var i = 0; i < allMessages.length; i++){
-    if (allMessages[i].author.id === "905282739467587626"){
-
-      // apaga tudo menos o First
-      if(!all){
-        if (!allMessages[i].content.includes('atuais')){
-          await allMessages[i].delete();
-        }
-      }
-
-      // apagar tudo mesmo
-      else{
+    // apaga tudo menos o First
+    if(!all){
+      if (!allMessages[i].content.includes('atuais')){
         await allMessages[i].delete();
       }
+    }
+
+    // apagar tudo mesmo
+    else{
+      await allMessages[i].delete();
     }
   }
 }
 
-client.on("ready", async function(){
-  client.channels.cache.get(channel).send("!continuarpontos")
-})
+// client.on("ready", async function(){
+//   client.channels.cache.get(channel).send("!continuarpontos")
+// })
 
 client.on("messageCreate", async function(message) {
-  if (!message.content.startsWith(prefix)) return;
   
-  const commandBody = message.content.slice(prefix.length);
-  const args = commandBody.split(' ');
-  const command = args.shift().toLowerCase();
-
-  // console.log(message)
-  if (message.author.id === '322815670981099542' || message.author.id === '294953779126861824' || message.author.id === "905282739467587626"){
-    // apenas esses IDs podem chamar o bot 
-
-    if (command === "limpar") {    
-      apagar(message, false)
-    }
-
-    if (command === "limpartudo") {    
-      apagar(message, true)
-    }
-
-    if (command === "iniciarpontos") {                      
-      message.reply("Iniciando!");
-      robo.iniciar(client)
-      }
+  // Comandos
+  if (message.content.startsWith(prefix)){
     
-    if (command === "finalizarpontos") {
-      console.log('Vamos parando!!!')
-      robo.acabar(client)
+    const commandBody = message.content.slice(prefix.length);
+    const args = commandBody.split(' ');
+    const command = args.shift().toLowerCase();
+
+    // console.log(message)
+    if (message.author.id === '322815670981099542' || message.author.id === '294953779126861824' || message.author.id === "905282739467587626"){
+      // apenas esses IDs podem chamar o bot 
+
+      if (command === "limpar") {    
+        apagar(message, false)
+      }
+
+      if (command === "limpartudo") {    
+        apagar(message, true)
+      }
+
+      if (command === "iniciarpontos") {                      
+        message.reply("Iniciando!");
+        robo.iniciar(client)
+        }
+      
+      if (command === "finalizarpontos") {
+        console.log('Vamos parando!!!')
+        robo.acabar(client)
+      }
+
+      if (command === "continuarpontos") {
+        await apagar(message, false)
+        console.log('Continuando!!!')
+        robo.continuar(client)
+      }
     }
 
-    if (command === "continuarpontos") {
-      await apagar(message, false)
-      console.log('Continuando!!!')
-      robo.continuar(client)
+  }
+
+  // Analise de mensagens (Menos proprio bot)
+  if (message.author.id != '905282739467587626'){
+    if(message.content.toLowerCase().includes('discord') && message.content.toLowerCase().includes('nitro')) {
+      let resp = '<@' + message.author.id + '> Proibido mencionar "Discord Nitro" nesse servidor'
+      await message.reply(resp)
+      await message.delete();
     }
   }
 });
