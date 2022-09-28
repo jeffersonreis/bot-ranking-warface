@@ -2,7 +2,8 @@ const fetch = require('node-fetch');
 listAllPlayers = []
 async function updateListAllPlayers(){
   let oldListAllPlayers = listAllPlayers
-  const url = 'https://api.wfstats.cf/clan/members?name=KingsOfZuera&server=eu';
+  // const url = 'https://api.wfstats.cf/clan/members?name=KingsOfZuera&server=eu';
+  const url = 'https://api.wf.my.com/clan/members?clan=KingsOfZuera';
   let result = await fetch(url)
   result = await result.json()
   console.log(result?.status === undefined)
