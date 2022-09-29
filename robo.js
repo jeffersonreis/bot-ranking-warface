@@ -35,7 +35,7 @@ async function comparererPointsUpdate(oldListPLay, newListPLay){
 
 async function updateListAllPlayers(){
   let oldListAllPlayers = listAllPlayers
-  const url = 'https://api.wfstats.cf/clan/members?name=KingsOfZuera&server=eu';
+  const url = 'https://api.wf.my.com/clan/members?clan=KingsOfZuera';
   let result = await fetch(url)
   result = await result.json()
   
